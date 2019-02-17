@@ -18,10 +18,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
+using Settings;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace DFDS.CapabilityService.WebApi
 {
+    public class ApplicationSettings
+    {
+        public string DatabaseConnectionstring { get; set; }
+    }
+    
+    
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -33,6 +40,11 @@ namespace DFDS.CapabilityService.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var settingsProvider = Configuration
+                .CreateSettingsProvider("CAPABILITYSERVICE");
+
+            var applicationSettings = settingsProvider.Populate(new ApplicationSettings());
+
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

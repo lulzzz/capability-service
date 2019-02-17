@@ -32,4 +32,8 @@
     <Folder Include="Properties" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Settings\Settings.csproj" />
+  </ItemGroup>
+
 </Project>
